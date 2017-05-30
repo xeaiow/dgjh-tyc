@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\CreateRequest;
 use App\Http\Requests\EditRequest;
 use App\Member;
+use App\Attend;
+use App\AttendBook;
 
 class UserController extends Controller
 {
@@ -99,5 +101,23 @@ class UserController extends Controller
             return "Not found users.";
         }
         return view('admin.lists')->with('user', $search_user);
+    }
+
+    // 所有點名
+    public function attend ()
+    {
+
+        $member = AttendBook::all();
+
+        return view('admin.attendLists')->with('user', $member);
+    }
+
+    // 點名內清單
+    public function attendInfo (Request $request)
+    {
+
+        $info = Attend::select('attend.*', 'member.firstname', 'member.numbers', 'member.class_id', 'attend_book.title')->join('member', 'attend.username', 'member.id')->join('attend_book', 'attend.groups', 'attend_book.id')->where('groups', '=', $request->id)->get();
+
+        return view('admin.attendInfo')->with('info', $info);
     }
 }

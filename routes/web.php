@@ -12,3 +12,9 @@ Route::group(['prefix' => '/admin'], function () {
     Route::get('/checkin', 'UserController@checkin');
     Route::post('/', 'UserController@searchHandle');
 });
+
+// 出席
+Route::group(['prefix' => '/admin/attend'], function () {
+    Route::get('/', 'UserController@attend');
+    Route::get('/{id}', 'UserController@attendInfo');
+});
