@@ -13,7 +13,23 @@
         </form>
     </div>
 
-    <div class="sixteen wide column computer only">
+    <!-- menu -->
+    <div class="four wide column computer only">
+        <div class="ui secondary vertical pointing menu">
+            <a class="active item" href="{{ url('/admin') }}">
+                學員
+            </a>
+            <a class="item" href="{{ url('/admin/attend') }}">
+                出席
+            </a>
+            <a class="item" href="{{ url('/admin/attend') }}">
+                保險冊
+            </a>
+        </div>
+    </div>
+
+    <!-- main -->
+    <div class="twelve wide column computer only">
         <table class="ui unstackable table attached segment">
             <thead>
                 <tr>
@@ -52,10 +68,10 @@
     </div>
 
     <div class="sixteen wide column mobile only">
-        <div class="ui cards">
+        <div class="ui cards stackable">
             @foreach($user as $info)
                 <div class="card">
-                    <div class="content">
+                    <div class="content fluid">
                         <div class="meta right floated">
                             <button class="ui blue icon basic button" onclick="window.location.href='{{ url('/admin/'.$info->id.'/edit') }}'">
                                 <i class="edit icon"></i>

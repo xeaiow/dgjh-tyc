@@ -9,6 +9,6 @@ class AttendBook extends Model
     protected $table = "attend_book";
 
     protected $fillable = [
-        'id', 'title', 'description', 'created_at', 'updated_at'
+        'id', 'title', 'description', 'quorum', 'attended', 'start', 'end', 'created_at', 'updated_at'
     ];
 }

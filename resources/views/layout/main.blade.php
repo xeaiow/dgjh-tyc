@@ -15,15 +15,6 @@
             <div class="header item">
                 原民舞蹈社管理系統
             </div>
-            <a class="item" href="{{ url('/admin') }}">
-                學員
-            </a>
-            <a class="item">
-                出席
-            </a>
-            <a class="item">
-                保險冊
-            </a>
         </div>
         <div class="ui container">
             @yield('content')

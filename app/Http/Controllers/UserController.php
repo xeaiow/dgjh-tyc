@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateRequest;
 use App\Http\Requests\EditRequest;
+use App\Http\Requests\CreateAttendRequest;
 use App\Member;
 use App\Attend;
 use App\AttendBook;
@@ -107,7 +108,10 @@ class UserController extends Controller
     public function attend ()
     {
 
-        $member = AttendBook::all();
+        $member = AttendBook::orderBy('id', 'DESC')->paginate(2);
+        if (!$member) {
+            echo "not found";
+        }
 
         return view('admin.attendLists')->with('user', $member);
     }
@@ -116,8 +120,84 @@ class UserController extends Controller
     public function attendInfo (Request $request)
     {
 
-        $info = Attend::select('attend.*', 'member.firstname', 'member.numbers', 'member.class_id', 'attend_book.title')->join('member', 'attend.username', 'member.id')->join('attend_book', 'attend.groups', 'attend_book.id')->where('groups', '=', $request->id)->get();
+        $info = Attend::select('attend.*', 'member.firstname', 'member.numbers', 'member.class_id', 'attend_book.title', 'attend_book.description')->join('member', 'attend.username', 'member.id')->join('attend_book', 'attend.groups', 'attend_book.id')->where('groups', '=', $request->id)->get();
 
         return view('admin.attendInfo')->with('info', $info);
+    }
+
+    // 新增點名單頁面
+    public function createAttend ()
+    {
+
+        $member = Member::where('status', '=', 0)->get();
+
+        return view('admin.createAttend')->with('user', $member);
+    }
+
+    // 新增點名單
+    public function createAttendHandle (CreateAttendRequest $request)
+    {
+        // 統計應到人數與實到人數
+        $attended = 0;
+        for ($j = 0; $j < count($request->record); $j++) {
+            if ($request->record[$j] == 0) {
+                $attended++;
+            }
+        }
+
+        $new = [
+            'title' => $request->title,
+            'description' => $request->description,
+            'quorum' => count($request->record),
+            'attended' => $attended,
+            'start' => $request->start,
+            'end' => $request->end,
+        ];
+
+        $attend = AttendBook::create($new);
+
+        if (!$attend) {
+            return "fail";
+        }
+
+        // 取得所有使用者資料
+        $member = Member::where('status', '=', 0)->get();
+
+        for ($i = 0; $i < count($request->record); $i++) {
+
+            $attend_book = [
+                'groups' => $attend->id,
+                'username' => $member[$i]->id,
+                'record' => $request->record[$i],
+            ];
+            if (!Attend::create($attend_book)) {
+                return "failed";
+            }
+        }
+
+        return redirect('admin/attend'); // 導到點名單紀錄列表
+    }
+
+    // 總紀錄
+    public function totalLists ()
+    {
+
+        $info = Member::where('status', '=', 0)->get();
+        $AttendBook = AttendBook::all();
+        $Attend = Attend::all();
+        $student_id = [];
+
+        for ($i = 0; $i < count($info); $i++) {
+            $student_id[$i] = $info[$i]->id;
+        }
+
+        $array = array(
+            'member' => $info,
+            'attend_book' => $AttendBook,
+            'attend' => $Attend,
+            'student_id' => $student_id,
+        );
+
+        return view('admin.totalLists')->with('info', $array);
     }
 }

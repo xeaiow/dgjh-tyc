@@ -16,5 +16,8 @@ Route::group(['prefix' => '/admin'], function () {
 // 出席
 Route::group(['prefix' => '/admin/attend'], function () {
     Route::get('/', 'UserController@attend');
-    Route::get('/{id}', 'UserController@attendInfo');
+    Route::get('/{id}', 'UserController@attendInfo')->where('id', '[0-9]+');
+    Route::get('/create', 'UserController@createAttend');
+    Route::post('/create', 'UserController@createAttendHandle');
+    Route::get('/total', 'UserController@totalLists');
 });
