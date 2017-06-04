@@ -9,6 +9,8 @@ use App\Http\Requests\CreateAttendRequest;
 use App\Member;
 use App\Attend;
 use App\AttendBook;
+use App\Insurance;
+use App\Activity;
 
 class UserController extends Controller
 {
@@ -199,5 +201,26 @@ class UserController extends Controller
         );
 
         return view('admin.totalLists')->with('info', $array);
+    }
+
+    // 保險冊列表
+    public function insurance ()
+    {
+
+        $insurance = Activity::all();
+
+        if (!$insurance) {
+            echo "not found";
+        }
+
+        return view('admin.insuranceLists')->with('info', $insurance);
+    }
+
+    // 保險冊單筆活動資料
+    public function insuranceInfo (Request $request)
+    {
+        $insuranceInfo = Insurance::select('insurance.*', 'member.class_id', 'member.numbers', 'member.firstname', 'member.birthday', 'member.identity_id', 'member.guardian', 'member.vegetarianism', 'member.status')->join('member', 'insurance.users', 'member.id')->where('groups', $request->id)->get();
+
+        return view('admin.insuranceInfo')->with('info', $insuranceInfo);
     }
 }

@@ -23,6 +23,10 @@
     <!-- computer -->
     <div class="twelve wide column computer only">
 
+        <div class="ui segment basic right aligned">
+            <button class="ui icon button orange" onclick="window.location.href='{{ url('/admin/'.$user->id.'/remove/') }}'"><i class="delete icon"></i></button>
+        </div>
+
         <form action="" class="ui form" method="post">
             {{ csrf_field() }}
             <div class="field">
@@ -89,12 +93,8 @@
                     </div>
                 </div>
             @endif
+            <input class="ui button primary fluid" type="submit" value="編輯">
         </form>
-        <div class="ui two bottom attached buttons">
-            <input class="ui button primary" type="submit" value="編輯">
-            <button class="ui button red" onclick="window.location.href='{{ url('/admin/'.$user->id.'/remove/') }}'">刪除</button>
-        </div>
-
     </div>
 
     <!-- mobile -->

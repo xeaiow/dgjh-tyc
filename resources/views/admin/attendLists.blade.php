@@ -13,7 +13,10 @@
             <a class="active item" href="{{ url('/admin/attend') }}">
                 出席
             </a>
-            <a class="item" href="{{ url('/admin/attend') }}">
+            <a class="item" href="{{ url('/admin/attend/total') }}">
+                出缺勤
+            </a>
+            <a class="item" href="{{ url('/admin/insurance') }}">
                 保險冊
             </a>
         </div>

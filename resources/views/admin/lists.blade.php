@@ -32,26 +32,28 @@
     <div class="twelve wide column computer only">
         <table class="ui unstackable table attached segment">
             <thead>
-                <tr>
+                <tr class="center aligned">
                     <td>班級</td>
                     <td>座號</td>
                     <td>姓名</td>
                     <td>生日</td>
                     <td>身分證字號</td>
                     <td>監護人</td>
+                    <td>素食</td>
                     <td>操作</td>
                 </tr>
             </thead>
             <tbody>
             @foreach($user as $info)
-                <tr>
+                <tr class="center aligned">
                     <td>{{ $info->class_id }}</td>
                     <td>{{ $info->numbers }}</td>
                     <td>{{ $info->firstname }}</td>
                     <td>{{ $info->birthday }}</td>
                     <td>{{ $info->identity_id }}</td>
                     <td>{{ $info->guardian }}</td>
-                    <td><a href="{{ url('/admin/'.$info->id.'/edit') }}"><button class="ui button green tiny" type="button">編輯</button></a></td>
+                    <td>{{ ($info->vegetarianism == 1 ) ? "✔":'' }}</td>
+                    <td><a href="{{ url('/admin/'.$info->id.'/edit') }}"><button class="ui button basic icon" type="button"><i class="edit icon blue"></i></button></a></td>
                 </tr>
             @endforeach
             </tbody>

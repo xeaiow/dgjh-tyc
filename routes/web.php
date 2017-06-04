@@ -21,3 +21,8 @@ Route::group(['prefix' => '/admin/attend'], function () {
     Route::post('/create', 'UserController@createAttendHandle');
     Route::get('/total', 'UserController@totalLists');
 });
+
+Route::group(['prefix' => '/admin/insurance'], function() {
+    Route::get('/', 'UserController@insurance');
+    Route::get('/{id}', 'UserController@insuranceInfo')->where('id', '[0-9]+');
+});

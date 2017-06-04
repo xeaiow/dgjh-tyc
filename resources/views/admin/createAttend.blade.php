@@ -28,7 +28,7 @@
                 {{ csrf_field() }}
 
                 <div class="field">
-                    <label>標題</label>
+                    <label>標題 (日期)</label>
                     <input type="text" name="title" placeholder="ex. 2017/5/30" value="{{ date('Y/m/d') }}">
                 </div>
                 @if ( $errors->first('title') )
@@ -141,7 +141,7 @@
                 {{ csrf_field() }}
 
                 <div class="field">
-                    <label>標題</label>
+                    <label>標題 (日期)</label>
                     <input type="text" name="title" placeholder="ex. 2017/5/30" value="{{ date('Y/m/d') }}">
                 </div>
                 @if ( $errors->first('title') )
@@ -195,18 +195,15 @@
                 </div>
                 <h2 class="ui header center aligned"><i class="users icon"></i>學生名單</h2>
 
-
-
-
                 <div class="ui cards stackable">
                     @php ($index = 0)
                     @foreach($user as $users)
                         <div class="card">
                             <div class="content">
                                 <div class="header">
-                                    <i class="user icon"></i> {{ $users->class_id }}<br />
-                                    <i class="birthday icon"></i> {{ $users->numbers }}<br />
-                                    <i class="hashtag icon"></i> {{ $users->firstname }}<br />
+                                    班級： {{ $users->class_id }}<br />
+                                    座號： {{ $users->numbers }}<br />
+                                    姓名： {{ $users->firstname }}<br />
                                 </div><hr>
                                 <div class="inline field">
                                     <div class="ui radio checkbox">
