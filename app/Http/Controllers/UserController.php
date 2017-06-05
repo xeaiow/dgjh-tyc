@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\CreateRequest;
 use App\Http\Requests\EditRequest;
 use App\Http\Requests\CreateAttendRequest;
+use App\Http\Requests\CreateActivityRequest;
 use App\Member;
 use App\Attend;
 use App\AttendBook;
@@ -43,6 +44,7 @@ class UserController extends Controller
             'birthday' => $request->birthday,
             'identity_id' => $request->identity_id,
             'guardian' => $request->guardian,
+            'vegetarianism' => $request->vegetarianism,
         ];
 
         if (!Member::create($new)) {
@@ -110,7 +112,7 @@ class UserController extends Controller
     public function attend ()
     {
 
-        $member = AttendBook::orderBy('id', 'DESC')->paginate(2);
+        $member = AttendBook::orderBy('id', 'DESC')->paginate(5);
         if (!$member) {
             echo "not found";
         }
@@ -207,7 +209,7 @@ class UserController extends Controller
     public function insurance ()
     {
 
-        $insurance = Activity::all();
+        $insurance = Activity::orderBy('activity_date', 'DESC')->get();
 
         if (!$insurance) {
             echo "not found";
@@ -222,5 +224,59 @@ class UserController extends Controller
         $insuranceInfo = Insurance::select('insurance.*', 'member.class_id', 'member.numbers', 'member.firstname', 'member.birthday', 'member.identity_id', 'member.guardian', 'member.vegetarianism', 'member.status')->join('member', 'insurance.users', 'member.id')->where('groups', $request->id)->get();
 
         return view('admin.insuranceInfo')->with('info', $insuranceInfo);
+    }
+
+    // 保險冊新增頁面
+    public function insuranceCreate ()
+    {
+
+        $member = Member::where('status', '!=', 1)->get();
+
+        return view('admin.insuranceCreate')->with('user', $member);
+    }
+
+    public function insuranceCreateHandle (CreateActivityRequest $request)
+    {
+
+        $new = [
+            'title' => $request->title,
+            'location' => $request->location,
+            'joined' => count($request->joined),
+            'activity_date' => $request->activity_date,
+        ];
+
+        $activity = Activity::create($new);
+
+        if (!$activity) {
+            return "fail";
+        }
+
+        // 取得所有使用者資料
+
+        $max = max($request->joined);
+
+        for ($i = 0; $i < $max; $i++) {
+
+            if ( isset($request->joined[$i]) ) {
+
+                $insurance = [
+                    'users' => $request->joined[$i],
+                    'groups' => $activity->id,
+                ];
+                if (!Insurance::create($insurance)) {
+                    return "failed";
+                }
+            }
+
+        }
+
+        return redirect('admin/insurance'); // 導到活動列表
+    }
+
+    // 新增使用者頁面
+    public function createMember ()
+    {
+
+        return view('admin.createMember');
     }
 }

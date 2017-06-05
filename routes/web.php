@@ -11,6 +11,7 @@ Route::group(['prefix' => '/admin'], function () {
     Route::post('/create', 'UserController@createHandle');
     Route::get('/checkin', 'UserController@checkin');
     Route::post('/', 'UserController@searchHandle');
+
 });
 
 // 出席
@@ -25,4 +26,7 @@ Route::group(['prefix' => '/admin/attend'], function () {
 Route::group(['prefix' => '/admin/insurance'], function() {
     Route::get('/', 'UserController@insurance');
     Route::get('/{id}', 'UserController@insuranceInfo')->where('id', '[0-9]+');
+    Route::get('/create', 'UserController@insuranceCreate');
+    Route::post('/create', 'UserController@insuranceCreateHandle');
+
 });

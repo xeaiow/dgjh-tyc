@@ -1,8 +1,6 @@
-@extends('layout.main')
+@extends('layout.not_menu_main')
 
 @section('content')
-
-<div class="ui grid">
 
     <div class="four wide column computer only">
 
@@ -71,6 +69,7 @@
                                                     echo '未到';
                                                     break;
                                                 default:
+                                                    echo '尚無紀錄';
                                                     break;
                                             }
                                         @endphp

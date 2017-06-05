@@ -2,6 +2,6 @@
 
 @section('content')
 
-gregre
+    
 
 @endsection

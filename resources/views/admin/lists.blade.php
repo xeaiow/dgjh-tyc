@@ -1,11 +1,9 @@
-@extends('layout.main')
+@extends('layout.lists_main')
 
 @section('content')
 
-<div class="ui grid">
-
     <!-- computer -->
-    <div class="sixteen wide column computer only">
+    <div class="four wide column computer only">
         <form action="" method="post" class="ui icon input">
             {{ csrf_field() }}
             <input type="text" name="search" placeholder="輸入關鍵字搜尋...">
@@ -13,14 +11,21 @@
         </form>
     </div>
 
+    <div class="twelve wide column computer only">
+        <a href="{{ url('/admin/create') }}"><button class="ui icon button grey fluid"><i class="plus icon"></i> 點名單</button></a>
+    </div>
+
     <!-- menu -->
     <div class="four wide column computer only">
         <div class="ui secondary vertical pointing menu">
-            <a class="active item" href="{{ url('/admin') }}">
+            <a class="item" href="{{ url('/admin') }}">
                 學員
             </a>
-            <a class="item" href="{{ url('/admin/attend') }}">
+            <a class="active item" href="{{ url('/admin/attend') }}">
                 出席
+            </a>
+            <a class="item" href="{{ url('/admin/attend/total') }}">
+                出缺勤
             </a>
             <a class="item" href="{{ url('/admin/attend') }}">
                 保險冊
@@ -30,6 +35,7 @@
 
     <!-- main -->
     <div class="twelve wide column computer only">
+
         <table class="ui unstackable table attached segment">
             <thead>
                 <tr class="center aligned">

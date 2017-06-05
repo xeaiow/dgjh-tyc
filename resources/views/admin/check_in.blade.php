@@ -2,7 +2,6 @@
 
 @section('content')
 
-    <div class="ui grid">
         <div class="sixteen wide column">
             <table class="ui unstackable table attached segment">
                 <thead>

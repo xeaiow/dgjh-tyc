@@ -21,25 +21,6 @@
 
             <div class="ui grid">
 
-                <div class="four wide column computer only">
-
-                    <div class="ui secondary vertical pointing menu">
-                        <a class="item" href="{{ url('/admin') }}">
-                            學員
-                        </a>
-                        <a class="active item" href="{{ url('/admin/attend') }}">
-                            點名
-                        </a>
-                        <a class="item" href="{{ url('/admin/attend/total') }}">
-                            缺勤
-                        </a>
-                        <a class="item" href="{{ url('/admin/insurance') }}">
-                            保險冊
-                        </a>
-                    </div>
-
-                </div>
-
                 @yield('content')
         </div>
 

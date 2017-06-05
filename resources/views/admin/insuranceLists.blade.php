@@ -2,34 +2,13 @@
 
 @section('content')
 
-<div class="ui grid">
-
-    <div class="four wide column computer only">
-
-        <div class="ui secondary vertical pointing menu">
-            <a class="item" href="{{ url('/admin') }}">
-                學員
-            </a>
-            <a class="active item" href="{{ url('/admin/attend') }}">
-                出席
-            </a>
-            <a class="item" href="{{ url('/admin/attend/total') }}">
-                出缺勤
-            </a>
-            <a class="item" href="{{ url('/admin/attend') }}">
-                保險冊
-            </a>
-        </div>
-
-    </div>
-
     <div class="twelve wide column computer only">
 
         <div class="ui segment basic">
-            <a href="{{ url('/admin/attend/create') }}"><button class="ui icon button grey fluid"><i class="plus icon"></i> 保險單</button></a>
+            <a href="{{ url('/admin/insurance/create') }}"><button class="ui icon button grey fluid"><i class="plus icon"></i> 保險單</button></a>
         </div>
 
-        <table class="ui celled table">
+        <table class="ui celled table center aligned">
             <thead>
                 <tr>
                     <th>名稱</th>
@@ -45,7 +24,7 @@
                         <td>{{ $insurance->title }}</td>
                         <td>{{ $insurance->location }}</td>
                         <td>{{ $insurance->activity_date }}</td>
-                        <td>18</td>
+                        <td>{{ $insurance->joined }}</td>
                         <td class="center aligned">
                             <a href="{{ url('/admin/insurance/'.$insurance->id.'') }}"><button type="button" class="ui icon button basic"><i class="caret right icon green"></i></button></a>
                         </td>
@@ -53,6 +32,31 @@
                 @endforeach
             </tbody>
         </table>
+
+    </div>
+
+    <div class="sixteen wide column mobile only">
+
+        <div class="ui segment basic">
+            <a href="{{ url('/admin/insurance/create') }}"><button class="ui icon button grey fluid"><i class="plus icon"></i> 保險單</button></a>
+        </div>
+
+        <div class="ui cards stackable">
+            @foreach($info as $insurance)
+                <div class="card">
+                    <div class="content fluid">
+
+                        <div class="header">
+                            <i class="user icon"></i> {{ $insurance->title }}<br />
+                            <i class="map pin icon"></i> {{ $insurance->location }}<br />
+                            <i class="calendar icon"></i> {{ $insurance->activity_date }}<br />
+                            <i class="user icon"></i> {{ $insurance->joined }}<br/ >
+                        </div><br/>
+                        <a href="{{ url('/admin/insurance/'.$insurance->id.'') }}"><button class="ui icon button basic fluid"><i class="caret right icon green"></i></button></a>
+                    </div>
+                </div>
+            @endforeach
+        </div>
 
     </div>
 

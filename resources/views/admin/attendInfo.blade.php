@@ -2,23 +2,6 @@
 
 @section('content')
 
-    <div class="ui grid">
-
-        <!-- menu -->
-        <div class="four wide column computer only">
-            <div class="ui secondary vertical pointing menu">
-                <a class="active item" href="{{ url('/admin') }}">
-                    學員
-                </a>
-                <a class="item" href="{{ url('/admin/attend') }}">
-                    出席
-                </a>
-                <a class="item" href="{{ url('/admin/attend') }}">
-                    保險冊
-                </a>
-            </div>
-        </div>
-
         <div class="twelve wide column computer only">
 
             <h2 class="ui icon header center aligned">
